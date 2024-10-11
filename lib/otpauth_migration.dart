@@ -126,9 +126,12 @@ class OtpAuthMigration {
     // extract suffix - Base64 encode
     List<String> results = [];
 
-    RegExp exp = RegExp(r"otpauth-migration\:\/\/offline\?data=(.*)$");
-    final match = exp.firstMatch(value);
-    final encodedUrl = match?.group(1);
+    // RegExp exp = RegExp(r"otpauth-migration\:\/\/offline\?data=(.*)$");
+    // final match = exp.firstMatch(value);
+    // final encodedUrl = match?.group(1);
+    final url = Uri.parse(value);
+    final encodedUrl =  url.queryParameters["data"] ?? '';
+    
     if (encodedUrl != null) {
       final encoded = Uri.decodeComponent(encodedUrl);
       var decoded = base64.decode(encoded);
